@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
 }
 
+bool isAuth = false;
+
 class _HomeState extends State<Home> {
-  @override
-  Widget build(BuildContext context) {
+  Scaffold buildAuthScreen() {
+    return Scaffold();
+  }
+
+  Scaffold buildunAuthScreen() {
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -50,5 +56,10 @@ class _HomeState extends State<Home> {
         ),
       ),
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return isAuth ? buildAuthScreen() : buildunAuthScreen();
   }
 }
