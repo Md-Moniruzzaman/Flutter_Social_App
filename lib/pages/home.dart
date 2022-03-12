@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+final GoogleSignIn googleSignIn = GoogleSignIn();
 
 class Home extends StatefulWidget {
   @override
@@ -9,8 +12,33 @@ class Home extends StatefulWidget {
 bool isAuth = false;
 
 class _HomeState extends State<Home> {
+  @override
+  void initState() {
+    googleSignIn.onCurrentUserChanged.listen((account) {
+      if (account != null) {
+        print('User SignIn: $account');
+        setState(() {
+          isAuth = true;
+        });
+      } else {
+        setState(() {
+          isAuth = false;
+        });
+      }
+    });
+    super.initState();
+  }
+
+  void login() {
+    googleSignIn.signIn();
+  }
+
   Scaffold buildAuthScreen() {
-    return Scaffold();
+    return Scaffold(
+      body: Container(
+        child: Text('AuthScreen'),
+      ),
+    );
   }
 
   Scaffold buildunAuthScreen() {
@@ -40,7 +68,7 @@ class _HomeState extends State<Home> {
               ),
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () => login,
               child: Container(
                 height: 60,
                 width: 320,
